@@ -2,9 +2,18 @@
 
 ## How to install the project
 
-- Database Environment at .env file
+### Database Environment
+- set environment .env
+- php artisan migrate
+- php artisan db:seed --class=UsersTableSeeder
+- php artisan storage:link
+
+### Install Package
 - Composer install
 - npm install
+
+## How to run the project
+
 - npm run watch
 - php artisan serve
 - Open http://127.0.0.1:8000/ at the browser
