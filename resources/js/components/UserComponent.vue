@@ -49,56 +49,75 @@
                 </v-card>
             </v-dialog>
         </v-toolbar>
-        <v-data-table
+        <v-card>
+            <v-card-title>
+                Nutrition
+                <v-spacer></v-spacer>
+                <v-text-field
+                    v-model="search"
+                    append-icon="search"
+                    label="Search"
+                    single-line
+                    hide-details
+                ></v-text-field>
+            </v-card-title>
+            <v-data-table
                 :headers="headers"
                 :items="users"
                 class="elevation-1"
-        >
-            <template v-slot:items="props">
-                <td>{{ props.item.name }}</td>
-                <td>{{ props.item.email }}</td>
-                <td>{{ props.item.phonenumber }}</td>
-                <td>
-                    <v-img
-                            :src="props.item.image"
-                            aspect-ratio="1"
-                            class="grey lighten-2"
-                    >
-                        <template v-slot:placeholder>
-                            <v-layout
-                                fill-height
-                                align-center
-                                justify-center
-                                ma-0
-                            >
-                                <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
-                            </v-layout>
-                        </template>
-                    </v-img>
-                </td>
-                <td class="justify-center layout px-0">
-                    <v-icon
-                            small
-                            class="mr-2"
-                            @click="editItem(props.item)"
-                    >
-                        edit
-                    </v-icon>
-                    <v-icon
-                            small
-                            @click="deleteItem(props.item)"
-                    >
-                        delete
-                    </v-icon>
-                </td>
-            </template>
-        </v-data-table>
+                :search="search"
+            >
+                <template v-slot:items="props">
+                    <td>{{ props.item.name }}</td>
+                    <td>{{ props.item.email }}</td>
+                    <td>{{ props.item.phonenumber }}</td>
+                    <td>
+                        <v-img
+                                :src="props.item.image"
+                                aspect-ratio="1"
+                                class="grey lighten-2 ma-2"
+                                height="100"
+                        >
+                            <template v-slot:placeholder>
+                                <v-layout
+                                    fill-height
+                                    align-center
+                                    justify-center
+                                    ma-0
+                                >
+                                    <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
+                                </v-layout>
+                            </template>
+                        </v-img>
+                    </td>
+                    <td class="justify-center layout px-0">
+                        <v-icon
+                                small
+                                class="mr-2"
+                                @click="editItem(props.item)"
+                        >
+                            edit
+                        </v-icon>
+                        <v-icon
+                                small
+                                @click="deleteItem(props.item)"
+                        >
+                            delete
+                        </v-icon>
+                    </td>
+                </template>
+                <v-alert v-slot:no-results :value="true" color="error" icon="warning">
+                    Your search for "{{ search }}" found no results.
+                </v-alert>
+            </v-data-table>
+        </v-card>
     </div>
 </template>
 <script>
   export default {
     data: () => ({
       dialog: false,
+      search: '',
       headers: [
         { text: 'Name', value: 'name' },
         { text: 'Email', value: 'email' },

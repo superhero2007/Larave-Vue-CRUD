@@ -1860,10 +1860,29 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       dialog: false,
+      search: '',
       headers: [{
         text: 'Name',
         value: 'name'
@@ -37265,103 +37284,175 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _c("v-data-table", {
-        staticClass: "elevation-1",
-        attrs: { headers: _vm.headers, items: _vm.users },
-        scopedSlots: _vm._u([
-          {
-            key: "items",
-            fn: function(props) {
-              return [
-                _c("td", [_vm._v(_vm._s(props.item.name))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(props.item.email))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(props.item.phonenumber))]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  [
-                    _c("v-img", {
-                      staticClass: "grey lighten-2",
-                      attrs: { src: props.item.image, "aspect-ratio": "1" },
-                      scopedSlots: _vm._u(
+      _c(
+        "v-card",
+        [
+          _c(
+            "v-card-title",
+            [
+              _vm._v("\n            Nutrition\n            "),
+              _c("v-spacer"),
+              _vm._v(" "),
+              _c("v-text-field", {
+                attrs: {
+                  "append-icon": "search",
+                  label: "Search",
+                  "single-line": "",
+                  "hide-details": ""
+                },
+                model: {
+                  value: _vm.search,
+                  callback: function($$v) {
+                    _vm.search = $$v
+                  },
+                  expression: "search"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-data-table",
+            {
+              staticClass: "elevation-1",
+              attrs: {
+                headers: _vm.headers,
+                items: _vm.users,
+                search: _vm.search
+              },
+              scopedSlots: _vm._u([
+                {
+                  key: "items",
+                  fn: function(props) {
+                    return [
+                      _c("td", [_vm._v(_vm._s(props.item.name))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(props.item.email))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(props.item.phonenumber))]),
+                      _vm._v(" "),
+                      _c(
+                        "td",
                         [
-                          {
-                            key: "placeholder",
-                            fn: function() {
-                              return [
-                                _c(
-                                  "v-layout",
-                                  {
-                                    attrs: {
-                                      "fill-height": "",
-                                      "align-center": "",
-                                      "justify-center": "",
-                                      "ma-0": ""
-                                    }
-                                  },
-                                  [
-                                    _c("v-progress-circular", {
-                                      attrs: {
-                                        indeterminate: "",
-                                        color: "grey lighten-5"
-                                      }
-                                    })
-                                  ],
-                                  1
-                                )
-                              ]
+                          _c("v-img", {
+                            staticClass: "grey lighten-2 ma-2",
+                            attrs: {
+                              src: props.item.image,
+                              "aspect-ratio": "1",
+                              height: "100"
                             },
-                            proxy: true
-                          }
+                            scopedSlots: _vm._u(
+                              [
+                                {
+                                  key: "placeholder",
+                                  fn: function() {
+                                    return [
+                                      _c(
+                                        "v-layout",
+                                        {
+                                          attrs: {
+                                            "fill-height": "",
+                                            "align-center": "",
+                                            "justify-center": "",
+                                            "ma-0": ""
+                                          }
+                                        },
+                                        [
+                                          _c("v-progress-circular", {
+                                            attrs: {
+                                              indeterminate: "",
+                                              color: "grey lighten-5"
+                                            }
+                                          })
+                                        ],
+                                        1
+                                      )
+                                    ]
+                                  },
+                                  proxy: true
+                                }
+                              ],
+                              null,
+                              true
+                            )
+                          })
                         ],
-                        null,
-                        true
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "td",
+                        { staticClass: "justify-center layout px-0" },
+                        [
+                          _c(
+                            "v-icon",
+                            {
+                              staticClass: "mr-2",
+                              attrs: { small: "" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.editItem(props.item)
+                                }
+                              }
+                            },
+                            [
+                              _vm._v(
+                                "\n                        edit\n                    "
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-icon",
+                            {
+                              attrs: { small: "" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.deleteItem(props.item)
+                                }
+                              }
+                            },
+                            [
+                              _vm._v(
+                                "\n                        delete\n                    "
+                              )
+                            ]
+                          )
+                        ],
+                        1
                       )
-                    })
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  { staticClass: "justify-center layout px-0" },
-                  [
-                    _c(
-                      "v-icon",
-                      {
-                        staticClass: "mr-2",
-                        attrs: { small: "" },
-                        on: {
-                          click: function($event) {
-                            return _vm.editItem(props.item)
-                          }
-                        }
-                      },
-                      [_vm._v("\n                    edit\n                ")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "v-icon",
-                      {
-                        attrs: { small: "" },
-                        on: {
-                          click: function($event) {
-                            return _vm.deleteItem(props.item)
-                          }
-                        }
-                      },
-                      [_vm._v("\n                    delete\n                ")]
-                    )
-                  ],
-                  1
-                )
-              ]
-            }
-          }
-        ])
-      })
+                    ]
+                  }
+                }
+              ])
+            },
+            [
+              _vm._v(" "),
+              _c("v-alert", {
+                attrs: { value: true, color: "error", icon: "warning" },
+                scopedSlots: _vm._u([
+                  {
+                    key: "no-results",
+                    fn: function() {
+                      return [
+                        _vm._v(
+                          '\n                Your search for "' +
+                            _vm._s(_vm.search) +
+                            '" found no results.\n            '
+                        )
+                      ]
+                    },
+                    proxy: true
+                  }
+                ])
+              })
+            ],
+            1
+          )
+        ],
+        1
+      )
     ],
     1
   )
