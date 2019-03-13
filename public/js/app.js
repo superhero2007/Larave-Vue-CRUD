@@ -1878,6 +1878,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -1903,19 +1904,18 @@ __webpack_require__.r(__webpack_exports__);
       editedIndex: -1,
       editedItem: {
         name: '',
-        calories: 0,
-        fat: 0,
-        carbs: 0,
-        protein: 0
+        email: '',
+        phonenumber: '',
+        image: ''
       },
       defaultItem: {
         name: '',
-        calories: 0,
-        fat: 0,
-        carbs: 0,
-        protein: 0
+        email: '',
+        phonenumber: '',
+        image: ''
       },
-      imageUrl: ''
+      imageUrl: '',
+      errorMessage: ''
     };
   },
   computed: {
@@ -1965,21 +1965,33 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       this.dialog = false;
+      this.errorMessage = '';
       setTimeout(function () {
         _this2.editedItem = Object.assign({}, _this2.defaultItem);
         _this2.editedIndex = -1;
       }, 300);
     },
     save: function save() {
+      if (!this.editedItem.name || !this.editedItem.email || !this.editedItem.phonenumber) {
+        this.errorMessage = 'Name, email and phone numbers are required.';
+        return;
+      }
+
       if (this.editedIndex > -1) {
-        this.$store.dispatch('updateUser', {
+        var updateObj = {
           id: this.editedItem.id,
           name: this.editedItem.name,
           email: this.editedItem.email,
-          phonenumber: this.editedItem.phonenumber,
-          image: this.imageUrl
-        });
+          phonenumber: this.editedItem.phonenumber
+        };
+        if (this.imageUrl !== this.editedItem.image) updateObj.image = this.imageUrl;
+        this.$store.dispatch('updateUser', updateObj);
       } else {
+        if (!this.imageUrl) {
+          this.errorMessage = 'Image is required.';
+          return;
+        }
+
         this.$store.dispatch('createUser', {
           name: this.editedItem.name,
           email: this.editedItem.email,
@@ -37244,7 +37256,13 @@ var render = function() {
                           )
                         ],
                         1
-                      )
+                      ),
+                      _vm._v(" "),
+                      _vm.errorMessage
+                        ? _c("span", { staticClass: "red--text" }, [
+                            _vm._v(_vm._s(_vm.errorMessage))
+                          ])
+                        : _vm._e()
                     ],
                     1
                   ),

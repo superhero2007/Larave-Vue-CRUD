@@ -42,7 +42,9 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required|max:191'
+            'name' => 'required|max:191',
+            'email' => 'required',
+            'phonenumber' => 'required'
         ]);
 
         try {
@@ -104,7 +106,9 @@ class UserController extends Controller
     public function update($id, Request $request)
     {
         $this->validate($request, [
-            'name' => 'filled|max:191'
+            'name' => 'filled|max:191',
+            'email' => 'required',
+            'phonenumber' => 'required'
         ]);
 
         try {

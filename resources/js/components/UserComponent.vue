@@ -39,6 +39,7 @@
                                 </v-flex>
                             </v-layout>
                         </v-container>
+                        <span v-if="errorMessage" class="red--text">{{ errorMessage }}</span>
                     </v-card-text>
 
                     <v-card-actions>
@@ -128,19 +129,18 @@
       editedIndex: -1,
       editedItem: {
         name: '',
-        calories: 0,
-        fat: 0,
-        carbs: 0,
-        protein: 0
+        email: '',
+        phonenumber: '',
+        image: ''
       },
       defaultItem: {
         name: '',
-        calories: 0,
-        fat: 0,
-        carbs: 0,
-        protein: 0
+        email: '',
+        phonenumber: '',
+        image: ''
       },
-      imageUrl: ''
+      imageUrl: '',
+      errorMessage: ''
     }),
 
     computed: {
@@ -189,6 +189,7 @@
 
       close () {
         this.dialog = false
+        this.errorMessage = ''
         setTimeout(() => {
           this.editedItem = Object.assign({}, this.defaultItem)
           this.editedIndex = -1
@@ -196,15 +197,25 @@
       },
 
       save () {
+        if (!this.editedItem.name || !this.editedItem.email || !this.editedItem.phonenumber) {
+          this.errorMessage = 'Name, email and phone numbers are required.';
+          return;
+        }
         if (this.editedIndex > -1) {
-          this.$store.dispatch('updateUser', {
+          const updateObj = {
             id: this.editedItem.id,
             name: this.editedItem.name,
             email: this.editedItem.email,
-            phonenumber: this.editedItem.phonenumber,
-            image: this.imageUrl
-          });
+            phonenumber: this.editedItem.phonenumber
+          };
+          if (this.imageUrl !== this.editedItem.image)
+            updateObj.image = this.imageUrl;
+          this.$store.dispatch('updateUser', updateObj);
         } else {
+          if (!this.imageUrl) {
+            this.errorMessage = 'Image is required.';
+            return;
+          }
           this.$store.dispatch('createUser', {
             name: this.editedItem.name,
             email: this.editedItem.email,
